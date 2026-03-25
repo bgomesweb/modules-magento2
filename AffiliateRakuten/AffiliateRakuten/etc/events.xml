@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="bgomesweb_affiliaterakuten_save_data"
+                  instance="Bgomesweb\AffiliateRakuten\Observer\SaveRakutenData" />
+    </event>
+
+    <event name="sales_order_place_after">
+        <observer
+            name="bgomesweb_affiliaterakuten_send_postback"
+            instance="Bgomesweb\AffiliateRakuten\Observer\SendRakutenPostback" />
+    </event>
+</config>
