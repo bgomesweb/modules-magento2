@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ *
+ * @author      Bruno Gomes <bgomesweb@gmail.com>
+ * @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+ * @license     <https://www.bgomesweb.com.br> Copyright
+ * @link        <https://www.bgomesweb.com.br/>
+ */
+
+/**
+ * @var $block \Bgomesweb\PagaLeveApi\Block\Info\Pagaleve
+ */
+$order = $block->getOrder();
+
+/** @var \Bgomesweb\PagaLeveApi\Helper\Data $helper */
+$helper = $this->helper('Bgomesweb\PagaLeveApi\Helper\Data');
+
+$orderId = $block->getOrder()->getId();
+$installments = $helper->getInstallmentsPagaleve((int) $orderId);
+
+?>
+<section class="admin__page-section order-view-billing-shipping">
+    <div class="admin__page-section-title">
+        <span class="title"><?= $block->escapeHtml(__('Pagaleve')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-payment-method pagaleve">
+            <div class="admin__page-section-item-title">
+                <?php if ($installments): ?>
+                    <div>
+                        <span class="title"><?= __('Parcelas:') ?> <?= $installments ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</section>

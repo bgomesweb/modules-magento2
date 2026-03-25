@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config/etc/system_file.xsd">
+<system>
+    <tab id="bgomesweb" translate="label" sortOrder="100">
+        <label>Bgomesweb</label>
+    </tab>
+    <section id="paga_leve_api" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Paga Leve API</label>
+        <tab>bgomesweb</tab>
+        <resource>Bgomesweb_PagaLeveApi::config</resource>
+        <group id="general" translate="label" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>General Settings</label>
+            <field id="feature_flag" translate="label" type="select" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Ativar</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <comment>Activate or deactivate the Paga Leve API.</comment>
+            </field>
+        </group>
+        <group id="credentials" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Credentials</label>
+
+            <field id="username" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Username</label>
+                <comment>The username for the Paga Leve API integration.</comment>
+            </field>
+
+            <field id="password" translate="label" type="password" sortOrder="20"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Password</label>
+                <comment>The password for the Paga Leve API integration.</comment>
+            </field>
+        </group>
+        <group id="api_settings" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>API Settings</label>
+            <field id="environment" translate="label" type="select" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Sandbox Mode Active</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <comment>Sandbox mode enabled?</comment>
+            </field>
+            <field id="base_url" translate="label" type="text" sortOrder="20"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Base URL</label>
+                <comment>The base URL of the Paga Leve API.</comment>
+                <depends>
+                    <field id="environment">0</field>
+                </depends>
+            </field>
+            <field id="base_url_test" translate="label" type="text" sortOrder="30"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Base URL Test</label>
+                <comment>The base URL for the sandbox environment of the Paga Leve API.</comment>
+                <depends>
+                    <field id="environment">1</field>
+                </depends>
+            </field>
+            <field id="auth_path" translate="label" type="text" sortOrder="40">
+                <label>Authentication Path</label>
+                <comment>The path for request </comment>
+            </field>
+            <field id="installment_path" translate="label" type="text" sortOrder="40">
+                <label>Installment Path</label>
+                <comment>The intallment path for request </comment>
+            </field>
+        </group>
+    </section>
+</system>
+</config>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config/etc/config.xsd">
+    <default>
+        <paga_leve_api>
+            <general>
+                <feature_flag>1</feature_flag>
+            </general>
+            <credentials>
+                <username>xxxx@axxxxx.com.br</username>
+                <password>xxxxx</password>
+            </credentials>
+            <api_settings>
+                <environment>0</environment>
+                <base_url>https://api.pagaleve.com.br</base_url>
+                <base_url_test>https://sandbox-api.pagaleve.io</base_url_test>
+                <auth_path>/v1/authentication</auth_path>
+                <installment_path>/v1/future-settlements</installment_path>
+            </api_settings>
+        </paga_leve_api>
+    </default>
+</config>

@@ -1,0 +1,15 @@
+{
+    "bgomesweb_pagaleve_installments": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "pagaleve_installment": true
+        },
+        "index": {
+            "BGOMESWEB_PAGALEVE_INSTALLMENTS_ENTITY_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ *
+ * @author      Bruno Gomes <bgomesweb@gmail.com>
+ * @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+ * @license     <https://www.bgomesweb.com.br> Copyright
+ * @link        <https://www.bgomesweb.com.br/>
+ */
+
+/**
+ * @var $block \Pagaleve\Payment\Block\Info\Pagaleve
+ */
+$order = $block->getOrder();
+
+/** @var \Bgomesweb\PagaLeveApi\Helper\Data $helper */
+$helper = $this->helper('Bgomesweb\PagaLeveApi\Helper\Data');
+
+$orderId = $block->getOrder()->getId();
+$installments = $helper->getInstallmentsPagaleve((int) $orderId);
+?>
+<section class="admin__page-section order-view-billing-shipping">
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-payment-method pagaleve">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= $block->escapeHtml(__('Pagaleve - PIX paid')) ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <div class="order-payment-additional" style="min-width: 400px;">
+                    <strong><?= __('Checkout ID') ?>: </strong><?= $order->getData('pagaleve_checkout_id') ?>
+                </div>
+                <div class="order-payment-additional" style="min-width: 400px;">
+                    <strong><?= __('Payment ID') ?>: </strong><?= $order->getData('pagaleve_payment_id') ?>
+                </div>
+                <?php if ($installments): ?>
+                    <div>
+                        <strong><?= __('Installments:') ?></strong> <?= $installments ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($order->getData('pagaleve_expiration_date')) : ?>
+                    <div class="order-payment-additional" style="min-width: 400px;">
+                        <strong><?= __('Release Date') ?>: </strong>
+                        <?= $block->formatDate($order->getData('pagaleve_expiration_date'), 3, true) ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</section>

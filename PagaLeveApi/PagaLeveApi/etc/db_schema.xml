@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="bgomesweb_pagaleve_installment" resource="default" engine="innodb"
+           comment="Bgomesweb PagaLeve Installments">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="order_id" unsigned="true" nullable="false" identity="false" comment="Order ID"/>
+        <column xsi:type="int" name="pagaleve_installment" unsigned="true" nullable="true" identity="false"
+                comment="PagaLeve Installment"/>
+        <column xsi:type="text" name="installment_values" nullable="true" comment="PagaLeve Installment value"/>
+        <column xsi:type="boolean" name="needs_retry" nullable="true" default="1" comment="Flag to retry fetching installment"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="Bgomesweb_PAGALEVEINSTALLMENT_ORDER_ID_SALES_ORDER_ENTITY_ID"
+                    table="bgomesweb_pagaleve_installment" column="order_id" referenceTable="sales_order"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="BGOMESWEB_PAGALEVE_INSTALLMENTS_ENTITY_ID" indexType="btree">
+            <column name="entity_id"/>
+        </index>
+    </table>
+</schema>

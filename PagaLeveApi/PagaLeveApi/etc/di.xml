@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Digital Hub Core Team <contato@Bgomesweb.com.br>
+  ~ @copyright   2024 Digital Hub (https://www.Bgomesweb.com.br/)
+  ~ @license     https://www.Bgomesweb.com.br Copyright
+  ~ @link        https://www.Bgomesweb.com.br/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Pagaleve\Payment\Block\Info\Pagaleve" type="Bgomesweb\PagaLeveApi\Block\Info\Pagaleve"/>
+    <preference for="Bgomesweb\PagaLeveApi\Api\Command\PagaleveInstallment\GetInterface"
+                type="Bgomesweb\PagaLeveApi\Model\Command\PagaleveInstallment\Get"/>
+    <preference for="Bgomesweb\PagaLeveApi\Api\Command\PagaleveInstallment\SaveInterface"
+                type="Bgomesweb\PagaLeveApi\Model\Command\PagaleveInstallment\Save"/>
+    <preference for="Bgomesweb\PagaLeveApi\Api\Data\PagaleveInstallmentInterface"
+                type="Bgomesweb\PagaLeveApi\Model\Data\PagaleveInstallment"/>
+    <preference for="Bgomesweb\PagaLeveApi\Api\Builder\PagaleveInstallment\PagaleveInstallmentBuilderInterface"
+                type="Bgomesweb\PagaLeveApi\Model\Builder\PagaleveInstallment\PagaleveInstallmentBuilder" />
+    <preference for="\Bgomesweb\PagaLeveApi\Api\Data\InstallmentValuePagaleveInterface"
+                type="\Bgomesweb\PagaLeveApi\Model\Data\InstallmentValuePagaleve" />
+    <preference for="\Bgomesweb\PagaLeveApi\Api\Data\PaymentPagaleveInterface"
+                type="\Bgomesweb\PagaLeveApi\Model\Data\PaymentPagaleve"/>
+    <preference for="\Bgomesweb\PagaLeveApi\Api\Builder\PagaleveInstallment\PagaleveInstallmentValuesBuilderInterface"
+                type="\Bgomesweb\PagaLeveApi\Model\Builder\PagaleveInstallment\PagaleveInstallmentValuesBuilder" />
+    <preference for="Bgomesweb\PagaLeveApi\Api\Repository\PagaleveInstallmentRepositoryInterface"
+                type="Bgomesweb\PagaLeveApi\Model\Repository\PagaleveInstallmentRepository" />
+
+
+    <virtualType name="PagaleveAuthorizationPath" type="Bgomesweb\Core\Model\Config\Config">
+       <arguments>
+           <argument name="vendor" xsi:type="string">paga_leve_api</argument>
+           <argument name="path" xsi:type="string">api_settings</argument>
+           <argument name="scope" xsi:type="string">auth_path</argument>
+       </arguments>
+   </virtualType>
+
+    <virtualType name="PagaleveInstallmentPath" type="Bgomesweb\Core\Model\Config\Config">
+        <arguments>
+            <argument name="vendor" xsi:type="string">paga_leve_api</argument>
+            <argument name="path" xsi:type="string">api_settings</argument>
+            <argument name="scope" xsi:type="string">installment_path</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PagaleveAuthorizationRequestFilter" type="Bgomesweb\Core\Model\Filter\Http\RequestFilter">
+        <arguments>
+            <argument name="path" xsi:type="string">token</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BgomeswebLogger" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/Bgomesweb-pagaleve.log</argument>
+            <argument name="loggerType" xsi:type="string">file</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PagaleveAuthorizationRequest" type="Bgomesweb\Core\Model\Command\Http\Request\Request">
+        <arguments>
+            <argument name="requestFilter" xsi:type="object">PagaleveAuthorizationRequestFilter</argument>
+            <argument name="headers" xsi:type="object">Bgomesweb\Core\Model\Handler\Request\DefaultJsonHeaders</argument>
+            <argument name="body" xsi:type="object">Bgomesweb\PagaLeveApi\Model\Handler\Request\PagaleveAuthenticateRequestBody</argument>
+            <argument name="pathConfig" xsi:type="object">PagaleveAuthorizationPath</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PagaleveInstallmentRequest" type="Bgomesweb\Core\Model\Command\Http\Request\Request">
+        <arguments>
+            <argument name="headers" xsi:type="object">Bgomesweb\PagaLeveApi\Model\Handler\Request\PagaleveInstallmentRequestHeaders</argument>
+            <argument name="pathConfig" xsi:type="object">PagaleveInstallmentPath</argument>
+            <argument name="method" xsi:type="string">GET</argument>
+            <argument name="body" xsi:type="object">Bgomesweb\PagaLeveApi\Model\Handler\Request\PagaLeveInstallmentRequestBody</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="\Bgomesweb\PagaLeveApi\Model\Handler\Request\PagaleveInstallmentRequestHeaders">
+        <arguments>
+            <argument name="request" xsi:type="object">PagaleveAuthorizationRequest</argument>
+        </arguments>
+    </type>
+
+    <type name="Bgomesweb\PagaLeveApi\Plugin\Pagaleve\Payment\Helper\Data\UpdatePayment">
+        <arguments>
+            <argument name="request" xsi:type="object">PagaleveInstallmentRequest</argument>
+        </arguments>
+    </type>
+
+    <type name="Bgomesweb\PagaLeveApi\Cron\RetryInstallmentFetch">
+        <arguments>
+            <argument name="request" xsi:type="object">PagaleveInstallmentRequest</argument>
+        </arguments>
+    </type>
+
+    <type name="\Bgomesweb\Core\Model\CredentialComposite">
+        <arguments>
+            <argument name="requests" xsi:type="array">
+                <item name="pagaleve_authorization" xsi:type="object">PagaleveAuthorizationRequest</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Bgomesweb\PagaLeveApi\Helper\Data">
+        <arguments>
+            <argument name="scopeConfig" xsi:type="object">Magento\Framework\App\Config\ScopeConfigInterface</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="Bgomesweb_pagaleveapi_after_getList"
+                type="Bgomesweb\PagaLeveApi\Plugin\Api\OrderRepository\AfterGetList" />
+        <plugin name="Bgomesweb_pagaleveapi_after_get"
+                type="Bgomesweb\PagaLeveApi\Plugin\Api\OrderRepository\AfterGet" />
+    </type>
+
+    <type name="Pagaleve\Payment\Helper\Data">
+        <plugin name="update_payment"
+                type="Bgomesweb\PagaLeveApi\Plugin\Pagaleve\Payment\Helper\Data\UpdatePayment"/>
+    </type>
+</config>
