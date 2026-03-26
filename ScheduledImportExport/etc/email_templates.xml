@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2026 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+
+    <template
+        id="magento_scheduledimportexport_import_success"
+        label="Import Success (Default)"
+        file="import_success.html"
+        type="html"
+        module="Bgomesweb_ScheduledImportExport"
+        area="adminhtml"/>
+
+    <template
+        id="magento_scheduledimportexport_export_success"
+        label="Export Success (Default)"
+        file="export_success.html"
+        type="html"
+        module="Bgomesweb_ScheduledImportExport"
+        area="adminhtml"/>
+</config>
+
+

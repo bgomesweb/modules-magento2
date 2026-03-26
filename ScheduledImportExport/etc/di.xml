@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2026 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\ScheduledImportExport\Model\Scheduled\Operation">
+        <plugin
+            name="bgomesweb_scheduled_success_email"
+            type="bgomesweb\ScheduledImportExport\Plugin\SendSuccessEmailAfterRun"
+            sortOrder="10"/>
+    </type>
+
+    <type name="Bgomesweb\ScheduledImportExport\Model\Email\SuccessNotifier">
+        <arguments>
+            <argument name="backendUrlBuilder" xsi:type="object">Magento\Backend\Model\Url</argument>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem</argument>
+        </arguments>
+    </type>
+</config>

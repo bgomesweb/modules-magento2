@@ -1,0 +1,40 @@
+<!--@subject Import Scheduled Operation Completed @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"var store.getFrontendName()":"Store Name",
+"var operation_name":"Operation Name",
+"var execution_date":"Execution Date",
+"var status":"Status",
+"var file_link":"File Download Link"
+}
+@-->
+
+<style>
+    body {
+        background:#ffffff;
+    }
+    .email-wrapper {
+        background:#ffffff;
+    }
+    .main-content {
+        background:#ffffff;
+    }
+</style>
+
+{{template config_path="design/email/header_template"}}
+<div class="am-head">
+    <h2>Import Scheduled Operation Completed</h2>
+
+    <p class="am-email-text"><strong>Name:</strong> {{var operation_name|escape}}</p>
+    <p class="am-email-text"><strong>Execution Date:</strong> {{var execution_date|escape}}</p>
+    <p class="am-email-text"><strong>Status:</strong> {{var status|escape}}</p>
+
+    {{if file_link}}
+    <p class="am-email-text"><a href="{{var file_link|escape}}" target="_blank">Download File</a></p>
+    {{else}}
+    <p class="am-email-text">No file available for download.</p>
+    {{/if}}
+</div>
+{{template config_path="design/email/footer_template"}}

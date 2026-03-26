@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2026 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magento_scheduled_operations">
+        <column xsi:type="varchar" name="success_email_receiver" length="255" nullable="true"/>
+        <column xsi:type="varchar" name="success_email_sender" length="255" nullable="true"/>
+        <column xsi:type="varchar" name="success_email_template" length="255" nullable="true"/>
+        <column xsi:type="text" name="success_email_copy" nullable="true"/>
+        <column xsi:type="varchar" name="success_email_copy_method" length="32" nullable="true"/>
+    </table>
+</schema>

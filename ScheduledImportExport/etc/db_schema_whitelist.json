@@ -1,0 +1,11 @@
+{
+    "magento_scheduled_operations": {
+        "column": {
+            "success_email_receiver": true,
+            "success_email_sender": true,
+            "success_email_template": true,
+            "success_email_copy": true,
+            "success_email_copy_method": true
+        }
+    }
+}

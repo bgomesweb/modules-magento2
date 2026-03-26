@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2026 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference
+        for="Magento\ScheduledImportExport\Block\Adminhtml\Scheduled\Operation\Edit\Form\Import"
+        type="Bgomesweb\ScheduledImportExport\Block\Adminhtml\Scheduled\Operation\Edit\Form\Import"/>
+
+    <preference
+        for="Magento\ScheduledImportExport\Block\Adminhtml\Scheduled\Operation\Edit\Form\Export"
+        type="Bgomesweb\ScheduledImportExport\Block\Adminhtml\Scheduled\Operation\Edit\Form\Export"/>
+
+    <type name="Magento\ScheduledImportExport\Model\Scheduled\Operation">
+        <plugin
+            name="bgomesweb_operation_before_save"
+            type="Bgomesweb\ScheduledImportExport\Plugin\OperationBeforeSave"/>
+    </type>
+</config>
