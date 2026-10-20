@@ -12,6 +12,20 @@
   - `Magento_Catalog` / `Magento_CatalogSearch` — busca e renderização de produtos.
   - `Magento_Checkout` — helpers de carrinho para adicionar produtos e gerar URLs de "Comprar".
 
+## Screenshots
+
+### Storefront — Widget de chat
+
+<img src="docs/images/ia-front.png" alt="Widget do Assistente de IA no storefront" width="320">
+
+### Admin — Configurações gerais
+
+![Configurações gerais no admin](docs/images/ia-admin.png)
+
+### Admin — Tópicos
+
+![Configuração de tópicos no admin](docs/images/ai-admin2.png)
+
 ## 2. Configurações do Sistema (System Configuration)
 
 - **Caminho no Menu:** Lojas > Configurações > Bgomesweb > Ai Assistant
