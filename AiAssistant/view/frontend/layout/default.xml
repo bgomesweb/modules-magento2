@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Bgomesweb_AiAssistant::css/swiper-bundle.min.css"/>
+    </head>
+    <body>
+        <referenceContainer name="before.body.end">
+            <block name="ai.assistant.widget"
+                   template="Bgomesweb_AiAssistant::widget.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Bgomesweb\AiAssistant\Model\Config</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

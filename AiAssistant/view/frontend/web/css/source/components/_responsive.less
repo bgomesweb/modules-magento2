@@ -1,0 +1,14 @@
+.media-width(@extremum, @break) when (@extremum ='max') and (@break =@screen__m) {
+    #ai-assistant-root .ai-chat-container {
+        width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum ='min') and (@break =@screen__m) {
+    body.ai-chat-open {
+        padding-right: var(--ai-panel-width);
+    }
+}

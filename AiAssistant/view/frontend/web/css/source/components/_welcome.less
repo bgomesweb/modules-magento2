@@ -1,0 +1,86 @@
+& when (@media-common =true) {
+    #ai-assistant-root .ai-welcome-card {
+        background: var(--ai-c-card);
+        border: 1px solid var(--ai-c-border);
+        border-radius: var(--ai-radius);
+        padding: var(--ai-sp-3xl);
+        box-shadow: var(--ai-shadow-card);
+
+        .ai-welcome-title {
+            font-size: var(--ai-fs-xl);
+            font-weight: 700;
+            color: var(--ai-c-text);
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .ai-welcome-highlight {
+            color: var(--ai-c-primary);
+        }
+
+        p {
+            font-size: var(--ai-fs-md);
+            line-height: 1.6;
+            color: var(--ai-c-muted);
+            margin: 18px 0 0;
+        }
+
+        .ai-terms-text {
+            display: block;
+            font-size: 11px;
+            line-height: 1.6;
+            color: rgb(110 110 115 / 60%);
+            border-top: 1px solid var(--ai-c-border);
+            margin-top: 18px;
+            padding-top: 18px;
+        }
+    }
+
+    #ai-assistant-root .ai-quick-topics {
+        margin-top: var(--ai-sp-xl);
+
+        .topics-title {
+            font-size: var(--ai-fs-sm);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ai-c-text);
+            margin: 0 0 14px;
+        }
+
+        .ai-topics-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--ai-sp-md);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+    #ai-assistant-root .ai-btn-suggestion {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: var(--ai-sp-md) 18px;
+        font-size: var(--ai-fs-md);
+        text-align: left;
+        background: var(--ai-c-primary);
+        color: var(--ai-c-white);
+        border: 1px solid var(--ai-c-primary);
+        border-radius: var(--ai-radius) var(--ai-radius) var(--ai-radius) var(--ai-radius-sm);
+        box-shadow: var(--ai-shadow-primary);
+        cursor: pointer;
+        transition: box-shadow var(--ai-transition), transform var(--ai-transition);
+        font-family: var(--ai-font);
+
+        &:hover {
+            box-shadow: var(--ai-shadow-primary-hv);
+            transform: translateY(-2px);
+        }
+    }
+
+    #ai-assistant-root .ai-suggested-replies {
+        margin-top: 1rem;
+    }
+}

@@ -1,0 +1,87 @@
+& when (@media-common =true) {
+    #ai-assistant-root {
+        .swiper-button-prev,
+        .swiper-button-next {
+            color: var(--ai-c-primary);
+            width: 24px;
+            height: 24px;
+            background: rgb(255 255 255 / 90%);
+            border-radius: var(--ai-radius-md);
+            box-shadow: 0 1px 4px rgb(0 0 0 / 12%);
+            transition: opacity var(--ai-transition);
+            opacity: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-top: 0;
+
+            &::after {
+                font-size: 10px;
+                font-weight: 700;
+            }
+        }
+
+        .ai-gallery-swiper:not(.swiper-initialized) {
+            .swiper-button-prev,
+            .swiper-button-next,
+            .swiper-pagination {
+                display: none !important;
+            }
+        }
+
+        .ai-gallery-swiper.swiper-initialized:hover .swiper-button-prev,
+        .ai-gallery-swiper.swiper-initialized:hover .swiper-button-next,
+        .ai-products-row.swiper-initialized:hover .swiper-button-prev,
+        .ai-products-row.swiper-initialized:hover .swiper-button-next {
+            opacity: 1;
+        }
+
+        .swiper-button-prev.swiper-button-disabled,
+        .swiper-button-next.swiper-button-disabled {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+    }
+
+    #ai-assistant-root .ai-product-card .ai-gallery-swiper {
+        width: 100%;
+        height: var(--ai-card-img-h);
+        overflow: hidden;
+        position: relative;
+
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .swiper-pagination {
+            bottom: var(--ai-sp-xs);
+        }
+
+        .swiper-pagination-bullet {
+            width: 5px;
+            height: 5px;
+            background: var(--ai-c-muted);
+            opacity: 0.5;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--ai-c-primary);
+            opacity: 1;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+& when (@media-common =true) {
+    #ai-assistant-root .ai-chat-container.is-fullscreen {
+        .ai-chat-header {
+            padding: 0 calc((100% - var(--ai-content-max)) / 2);
+        }
+
+        .ai-chat-messages {
+            padding: 32px;
+            align-items: center;
+
+            > * {
+                width: 100%;
+                max-width: var(--ai-content-max);
+            }
+
+            .user-message {
+                align-self: center;
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .assistant-message {
+                align-self: center;
+            }
+        }
+
+        .ai-compare-inner {
+            transform: none !important;
+        }
+
+        .ai-compare-table-cell {
+            flex: 1;
+            margin-right: 0;
+        }
+
+        .ai-chat-footer {
+            padding: var(--ai-sp-xl) 32px var(--ai-sp-2xl);
+        }
+    }
+}

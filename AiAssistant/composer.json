@@ -1,0 +1,23 @@
+{
+    "name": "bgomesweb/module-ai-assistant",
+    "version": "1.0.0",
+    "description": "Magento 2 module providing an AI-powered shopping assistant widget with product search and customer support topics",
+    "type": "magento2-module",
+    "require": {
+        "php": ">=8.1",
+        "magento/framework": "*",
+        "magento/module-catalog-search": "*",
+        "bgomesweb/module-gemini-provider": "*"
+    },
+    "license": [
+        "Proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Bgomesweb\\AiAssistant\\": ""
+        }
+    }
+}

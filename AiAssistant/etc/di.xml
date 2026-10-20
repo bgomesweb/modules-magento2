@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Bgomesweb\AiAssistant\Api\ToolRegistryInterface"
+                type="Bgomesweb\AiAssistant\Model\Service\Tool\ToolRegistry"/>
+
+    <preference for="Bgomesweb\AiAssistant\Api\FrontendToolProviderInterface"
+                type="Bgomesweb\AiAssistant\Model\Service\FrontendToolProvider"/>
+
+    <preference for="Bgomesweb\AiAssistant\Api\ToolExecutionLoopInterface"
+                type="Bgomesweb\AiAssistant\Model\Service\Tool\ToolExecutionLoop"/>
+
+    <type name="Bgomesweb\AiAssistant\Model\Service\Tool\ToolRegistry">
+        <arguments>
+            <argument name="backendTools" xsi:type="array">
+                <item name="search_products" xsi:type="array">
+                    <item name="name" xsi:type="string">search_products</item>
+                    <item name="description" xsi:type="string">Busca produtos no catálogo da loja. Use quando o cliente
+                        pedir para ver, encontrar ou comparar produtos. Não use para responder perguntas gerais.
+                    </item>
+                    <item name="parameters" xsi:type="array">
+                        <item name="type" xsi:type="string">object</item>
+                        <item name="properties" xsi:type="array">
+                            <item name="query" xsi:type="array">
+                                <item name="type" xsi:type="string">string</item>
+                                <item name="description" xsi:type="string">Termos da busca, incluindo categoria, finalidade,
+                                    adjetivos e especificações mencionadas pelo cliente (ex: "notebook gamer 16GB RTX").
+                                    Preserve os termos técnicos para melhorar a relevância.
+                                </item>
+                            </item>
+                            <item name="max_price" xsi:type="array">
+                                <item name="type" xsi:type="string">number</item>
+                                <item name="description" xsi:type="string">Preço máximo em reais (opcional).</item>
+                            </item>
+                            <item name="min_price" xsi:type="array">
+                                <item name="type" xsi:type="string">number</item>
+                                <item name="description" xsi:type="string">Preço mínimo em reais (opcional).</item>
+                            </item>
+                            <item name="limit" xsi:type="array">
+                                <item name="type" xsi:type="string">integer</item>
+                                <item name="description" xsi:type="string">Quantidade de produtos a retornar (1–6,
+                                    padrão 3).
+                                </item>
+                            </item>
+                            <item name="only_on_sale" xsi:type="array">
+                                <item name="type" xsi:type="string">boolean</item>
+                                <item name="description" xsi:type="string">Filtra apenas produtos que estão em promoção,
+                                    oferta ou com desconto ativo no catálogo (opcional).
+                                </item>
+                            </item>
+                            <item name="sort_by" xsi:type="array">
+                                <item name="type" xsi:type="string">string</item>
+                                <item name="description" xsi:type="string">Ordenação dos resultados: "price_asc" para
+                                    produtos mais baratos primeiro, "price_desc" para produtos mais caros primeiro, ou
+                                    "relevance" para padrão.
+                                </item>
+                            </item>
+                        </item>
+                        <item name="required" xsi:type="array">
+                            <item name="0" xsi:type="string">query</item>
+                        </item>
+                    </item>
+                    <item name="handler" xsi:type="object">
+                        Bgomesweb\AiAssistant\Model\Service\Tool\ProductSearchToolHandler
+                    </item>
+                </item>
+                <item name="suggest_replies" xsi:type="array">
+                    <item name="name" xsi:type="string">suggest_replies</item>
+                    <item name="description" xsi:type="string">OBRIGATÓRIA em toda resposta final: gere de 2 a 4
+                        botões de resposta rápida altamente personalizados e rigorosamente contextuais ao momento
+                        atual da conversa. Você DEVE OBRIGATORIAMENTE incluir sua resposta final em texto puro para o
+                        cliente na MESMA MENSAGEM em que chamar a ferramenta suggest_replies. Nunca chame suggest_replies
+                        sem incluir a mensagem de texto na própria resposta.
+                    </item>
+                    <item name="parameters" xsi:type="array">
+                        <item name="type" xsi:type="string">object</item>
+                        <item name="properties" xsi:type="array">
+                            <item name="message" xsi:type="array">
+                                <item name="type" xsi:type="string">string</item>
+                                <item name="description" xsi:type="string">Sua resposta textual amigável e completa em Português do Brasil endereçada ao cliente.</item>
+                            </item>
+                            <item name="replies" xsi:type="array">
+                                <item name="type" xsi:type="string">array</item>
+                                <item name="description" xsi:type="string">Lista de sugestões (máximo 4). Cada item deve ter 'label' (texto curto do botão) e 'text' (pergunta em 1ª pessoa enviada ao clicar).
+                                </item>
+                                <item name="items" xsi:type="array">
+                                    <item name="type" xsi:type="string">object</item>
+                                    <item name="properties" xsi:type="array">
+                                        <item name="label" xsi:type="array">
+                                            <item name="type" xsi:type="string">string</item>
+                                            <item name="description" xsi:type="string">Texto curto, direto e chamativo exibido no botão (ex: "Ver especificações", "Formas de pagamento").
+                                            </item>
+                                        </item>
+                                        <item name="text" xsi:type="array">
+                                            <item name="type" xsi:type="string">string</item>
+                                            <item name="description" xsi:type="string">Pergunta ou frase completa em 1ª pessoa enviada ao assistente quando o cliente clicar no botão. DEVE possuir alinhamento e coerência total com o assunto prometido no label.
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="required" xsi:type="array">
+                            <item name="0" xsi:type="string">message</item>
+                            <item name="1" xsi:type="string">replies</item>
+                        </item>
+                    </item>
+                    <item name="handler" xsi:type="object">
+                        Bgomesweb\AiAssistant\Model\Service\Tool\SuggestRepliesToolHandler
+                    </item>
+                    <item name="is_terminal" xsi:type="boolean">true</item>
+                </item>
+                <item name="compare_products" xsi:type="array">
+                    <item name="name" xsi:type="string">compare_products</item>
+                    <item name="description" xsi:type="string">Sintetiza resumos comparativos de IA para cada produto
+                        retornado do catálogo. Chame esta ferramenta imediatamente após search_products enviando 1
+                        resumo por coluna de produto.
+                    </item>
+                    <item name="parameters" xsi:type="array">
+                        <item name="type" xsi:type="string">object</item>
+                        <item name="properties" xsi:type="array">
+                            <item name="comparisons" xsi:type="array">
+                                <item name="type" xsi:type="string">array</item>
+                                <item name="description" xsi:type="string">Lista de resumos por produto. Cada item
+                                    possui 'sku' e 'summary'.
+                                </item>
+                                <item name="items" xsi:type="array">
+                                    <item name="type" xsi:type="string">object</item>
+                                    <item name="properties" xsi:type="array">
+                                        <item name="sku" xsi:type="array">
+                                            <item name="type" xsi:type="string">string</item>
+                                            <item name="description" xsi:type="string">SKU exato do produto retornado na
+                                                busca.
+                                            </item>
+                                        </item>
+                                        <item name="summary" xsi:type="array">
+                                            <item name="type" xsi:type="string">string</item>
+                                            <item name="description" xsi:type="string">Resumo conciso de 1 a 2 frases
+                                                para a coluna do produto destacando seu diferencial ou público-alvo.
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="required" xsi:type="array">
+                            <item name="0" xsi:type="string">comparisons</item>
+                        </item>
+                    </item>
+                    <item name="handler" xsi:type="object">
+                        Bgomesweb\AiAssistant\Model\Service\Tool\CompareProductsToolHandler
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Bgomesweb\AiAssistant\Model\Service\ProductSearch">
+        <arguments>
+            <argument name="fulltextCollectionFactory" xsi:type="object">Magento\CatalogSearch\Model\ResourceModel\Fulltext\CollectionFactory</argument>
+        </arguments>
+    </type>
+</config>

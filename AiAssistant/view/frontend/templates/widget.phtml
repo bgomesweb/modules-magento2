@@ -1,0 +1,393 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var Escaper $escaper
+ */
+
+use Magento\Framework\Escaper;
+use Bgomesweb\AiAssistant\Model\Config;
+
+/** @var Config $viewModel */
+$viewModel = $block->getViewModel();
+
+if ($viewModel && $viewModel->isWidgetActive()):
+    ?>
+    <section id="ai-assistant-root"
+             class="ai-theme-<?= $escaper->escapeHtmlAttr($viewModel->getTheme()) ?>"
+             data-theme="<?= $escaper->escapeHtmlAttr($viewModel->getTheme()) ?>"
+             aria-label="<?= $escaper->escapeHtmlAttr(__('Virtual Assistant')) ?>"
+             data-bind="scope: 'aiAssistant'">
+
+        <!-- FAB — collapsed state (positioned independently) -->
+        <button type="button"
+                class="ai-fab"
+                data-bind="click: openChat, css: { 'is-hidden': isOpen }"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Open Virtual Assistant')) ?>">
+            <span class="ai-fab-ring" aria-hidden="true"></span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
+                 aria-hidden="true" focusable="false">
+                <!-- chat -->
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+        </button>
+
+        <!-- Chat panel -->
+        <div class="ai-chat-container"
+             data-bind="css: { 'is-open': isOpen, 'is-fullscreen': isFullscreen }">
+
+            <header class="ai-chat-header">
+                <div class="header-info">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
+                         class="ai-sparkle-icon" aria-hidden="true" focusable="false">
+                        <!-- auto_awesome -->
+                        <path
+                            d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/>
+                    </svg>
+                    <strong class="title"><?= $escaper->escapeHtml(__('Virtual Assistant')) ?></strong>
+                </div>
+
+                <div class="header-actions" role="toolbar"
+                     aria-label="<?= $escaper->escapeHtmlAttr(__('Chat controls')) ?>">
+                    <button type="button"
+                            class="ai-btn-header"
+                            data-bind="click: clearConversation, disable: isLoading"
+                            title="<?= $escaper->escapeHtmlAttr(__('New conversation')) ?>"
+                            aria-label="<?= $escaper->escapeHtmlAttr(__('New conversation')) ?>">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                             aria-hidden="true" focusable="false">
+                            <!-- refresh -->
+                            <path
+                                d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                        </svg>
+                    </button>
+
+                    <button type="button"
+                            class="ai-btn-header"
+                            data-bind="click: toggleFullscreen,
+                            attr: {
+                                'aria-label': isFullscreen() ? '<?= $escaper->escapeJs(__('Restore')) ?>' : '<?= $escaper->escapeJs(__('Full Screen')) ?>',
+                                'aria-pressed': isFullscreen(),
+                                'title': isFullscreen() ? '<?= $escaper->escapeJs(__('Restore')) ?>' : '<?= $escaper->escapeJs(__('Full Screen')) ?>'
+                                }">
+                        <!-- ko ifnot: isFullscreen -->
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                             aria-hidden="true" focusable="false">
+                            <!-- fullscreen -->
+                            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                        </svg>
+                        <!-- /ko -->
+                        <!-- ko if: isFullscreen -->
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                             aria-hidden="true" focusable="false">
+                            <!-- fullscreen_exit -->
+                            <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                        </svg>
+                        <!-- /ko -->
+                    </button>
+
+                    <button type="button"
+                            class="ai-btn-header ai-btn-close"
+                            data-bind="click: closeChat"
+                            title="<?= $escaper->escapeHtmlAttr(__('Close')) ?>"
+                            aria-label="<?= $escaper->escapeHtmlAttr(__('Close')) ?>">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                             aria-hidden="true" focusable="false">
+                            <!-- close -->
+                            <path
+                                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="ai-chat-messages"
+                 id="ai-chat-messages-body"
+                 role="log"
+                 aria-live="polite"
+                 aria-atomic="false"
+                 aria-label="<?= $escaper->escapeHtmlAttr(__('Conversation')) ?>">
+
+                <div class="ai-welcome-section" data-bind="visible: messages().length === 0" aria-hidden="false">
+                    <div class="ai-welcome-card">
+                        <h2 class="ai-welcome-title">
+                            <?= $escaper->escapeHtml(__('How can I')) ?><br>
+                            <span class="ai-welcome-highlight"><?= $escaper->escapeHtml(__('help you today?')) ?></span>
+                        </h2>
+                        <p><?= $escaper->escapeHtml(__('I recommend products, explain features, make comparisons and help with support and orders.')) ?></p>
+                        <small
+                            class="ai-terms-text"><?= $escaper->escapeHtml(__('By using the Virtual Assistant, you agree to our terms. Responses are AI-generated — verify accuracy.')) ?></small>
+                    </div>
+
+                    <?php
+                    $activeTopics = $viewModel->getActiveTopics();
+                    ?>
+                    <?php if (!empty($activeTopics)): ?>
+                        <nav class="ai-quick-topics"
+                             aria-label="<?= $escaper->escapeHtmlAttr(__('Suggested topics')) ?>">
+                            <p class="topics-title"
+                               aria-hidden="true"><?= $escaper->escapeHtml(__('Suggested topics')) ?></p>
+                            <ul class="ai-topics-grid" role="list">
+                            <?php foreach ($activeTopics as $topicKey => $topic): ?>
+                                <li role="listitem">
+                                    <button type="button" class="ai-btn-suggestion"
+                                            data-bind="click: function() { sendSuggestedQuery('<?= $escaper->escapeJs(__($topic['query'] ?? '')) ?>', '<?= $escaper->escapeJs($topicKey) ?>'); }">
+                                        <?= $escaper->escapeHtml(__($topic['topic_name'] ?? '')) ?>
+                                    </button>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </nav>
+                    <?php endif; ?>
+                </div>
+
+                <!-- ko foreach: messages -->
+                <article data-bind="css: type + '-message' + ($data.status ? ' is-' + $data.status : ''),
+                                attr: { 'aria-label': type === 'user' ? $t('Your message') : (type === 'status' ? $t('Status notification') : $t('Assistant response')) }">
+                    <div class="message-bubble">
+                        <!-- ko if: type === 'status' && $data.status === 'success' -->
+                        <svg class="ai-status-icon" width="18" height="18" viewBox="0 0 24 24"
+                             fill="currentColor" aria-hidden="true" focusable="false">
+                            <!-- check_circle (Material Icons) -->
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <!-- /ko -->
+                        <!-- ko if: type === 'status' && $data.status === 'error' -->
+                        <svg class="ai-status-icon" width="18" height="18" viewBox="0 0 24 24"
+                             fill="currentColor" aria-hidden="true" focusable="false">
+                            <!-- error (Material Icons) -->
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        <!-- /ko -->
+                        <!-- ko if: type === 'assistant' && $data.status === 'error' -->
+                        <svg class="ai-status-icon" width="18" height="18" viewBox="0 0 24 24"
+                             fill="currentColor" aria-hidden="true" focusable="false">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        <!-- /ko -->
+                        <div class="ai-message-text" data-bind="html: ($parents[0] && typeof $parents[0].formatMessageText === 'function') ? $parents[0].formatMessageText(text) : text"></div>
+                    </div>
+
+                    <!-- ko if: groups && groups.length -->
+                    <div class="ai-product-groups" data-bind="foreach: groups">
+                        <section class="ai-product-group" aria-label="">
+                            <h3 class="ai-product-group-title" data-bind="text: query"></h3>
+
+                            <!-- Product cards — each one is its own card -->
+                            <div class="ai-products-row">
+                                <!-- ko foreach: products -->
+                                <article class="ai-product-card">
+                                    <!-- ko if: gallery_images && gallery_images.length > 1 -->
+                                    <div class="ai-gallery-swiper swiper">
+                                        <div class="swiper-wrapper" data-bind="foreach: gallery_images">
+                                            <div class="swiper-slide">
+                                                <a data-bind="attr: {href: $parent.url, 'aria-label': $parent.name}"
+                                                   target="_blank" rel="noopener noreferrer"
+                                                   class="product-image-wrapper">
+                                                    <img data-bind="attr: {src: $data, alt: $parent.name}"
+                                                         class="product-image" loading="lazy"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-pagination"></div>
+                                        <div class="swiper-button-prev"></div>
+                                        <div class="swiper-button-next"></div>
+                                    </div>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: gallery_images && gallery_images.length > 1 -->
+                                    <a data-bind="attr: {href: url, 'aria-label': name}"
+                                       target="_blank" rel="noopener noreferrer"
+                                       class="product-image-wrapper">
+                                        <img data-bind="attr: {src: image_url, alt: name}"
+                                             class="product-image" loading="lazy"/>
+                                    </a>
+                                    <!-- /ko -->
+                                    <div class="ai-card-body">
+                                        <a data-bind="attr: {href: url}, html: name"
+                                           target="_blank" rel="noopener noreferrer"
+                                           class="ai-card-name"></a>
+                                        <span class="ai-card-price" data-bind="html: formatted_price"></span>
+                                        <button type="button"
+                                                class="ai-btn-buy"
+                                                data-bind="click: $parents[2].addToCart.bind($parents[2]),
+                                                       disable: $parents[2].addingToCart() === product_id,
+                                                       css: { 'is-loading': $parents[2].addingToCart() === product_id },
+                                                       attr: { 'aria-busy': $parents[2].addingToCart() === product_id,
+                                                               'aria-label': $t('Buy') + ' ' + name }">
+                                            <!-- ko if: $parents[2].addingToCart() === product_id -->
+                                            <span data-bind="i18n: 'Adding...'"></span>
+                                            <!-- /ko -->
+                                            <!-- ko ifnot: $parents[2].addingToCart() === product_id -->
+                                            <span data-bind="i18n: 'Buy'"></span>
+                                            <!-- /ko -->
+                                        </button>
+                                    </div>
+
+                                </article>
+                                <!-- /ko -->
+                            </div>
+                            <!-- ko if: products && products.length > 1 && products[0].comparison_differences && products[0].comparison_differences.length -->
+                            <div class="ai-compare-card">
+                                <div class="ai-compare-inner" data-bind="foreach: products[0].comparison_differences">
+                                    <div class="ai-compare-table-row">
+                                        <!-- ko foreach: $parent.products -->
+                                        <div class="ai-compare-table-cell">
+
+                                        <span class="ai-compare-cell-label">
+                                            <!-- ko if: $index() === 0 -->
+                                            <span data-bind="html: $parent.label"></span>
+                                            <!-- /ko -->
+                                        </span>
+                                            <span class="ai-compare-cell-value"
+                                                  data-bind="html: (comparison_differences && comparison_differences[$parentContext.$index()]) ? comparison_differences[$parentContext.$index()].text : '-'"></span>
+                                        </div>
+                                        <!-- /ko -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /ko -->
+                        </section>
+                    </div>
+                    <!-- /ko -->
+
+                    <!-- ko if: (!groups || !groups.length) && products && products.length -->
+                    <div class="ai-products-row">
+                        <!-- ko foreach: products -->
+                        <article class="ai-product-card">
+                            <!-- ko if: gallery_images && gallery_images.length > 1 -->
+                            <div class="ai-gallery-swiper swiper">
+                                <div class="swiper-wrapper" data-bind="foreach: gallery_images">
+                                    <div class="swiper-slide">
+                                        <a data-bind="attr: {href: $parent.url, 'aria-label': $parent.name}"
+                                           target="_blank" rel="noopener noreferrer"
+                                           class="product-image-wrapper">
+                                            <img data-bind="attr: {src: $data, alt: $parent.name}"
+                                                 class="product-image" loading="lazy"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                            </div>
+                            <!-- /ko -->
+                            <!-- ko ifnot: gallery_images && gallery_images.length > 1 -->
+                            <a data-bind="attr: {href: url, 'aria-label': name}"
+                               target="_blank" rel="noopener noreferrer"
+                               class="product-image-wrapper">
+                                <img data-bind="attr: {src: image_url, alt: name}"
+                                     class="product-image" loading="lazy"/>
+                            </a>
+                            <!-- /ko -->
+                            <div class="ai-card-body">
+                                <a data-bind="attr: {href: url}, html: name"
+                                   target="_blank" rel="noopener noreferrer"
+                                   class="ai-card-name"></a>
+                                <span class="ai-card-price" data-bind="html: formatted_price"></span>
+                                <button type="button"
+                                        class="ai-btn-buy"
+                                        data-bind="click: $parents[1].addToCart.bind($parents[1]),
+                                               disable: $parents[1].addingToCart() === product_id,
+                                               css: { 'is-loading': $parents[1].addingToCart() === product_id },
+                                               attr: { 'aria-busy': $parents[1].addingToCart() === product_id,
+                                                       'aria-label': $t('Buy') + ' ' + name }">
+                                    <!-- ko if: $parents[1].addingToCart() === product_id -->
+                                    <span data-bind="i18n: 'Adding...'"></span>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: $parents[1].addingToCart() === product_id -->
+                                    <span data-bind="i18n: 'Buy'"></span>
+                                    <!-- /ko -->
+                                </button>
+                            </div>
+                        </article>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
+
+                    <!-- ko if: suggested_replies && ko.unwrap(suggested_replies).length -->
+                    <nav class="ai-quick-topics ai-suggested-replies" aria-label="<?= $escaper->escapeHtmlAttr(__('Suggested topics')) ?>">
+                        <ul class="ai-topics-grid" role="list">
+                            <!-- ko foreach: suggested_replies -->
+                            <li role="listitem">
+                                <button type="button" class="ai-btn-suggestion"
+                                        data-bind="click: function() { $parents[1].sendSuggestedReply($data, $parent); }, text: label">
+                                </button>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+                    </nav>
+                    <!-- /ko -->
+                </article>
+                <!-- /ko -->
+
+                <!-- ko if: isLoading -->
+                <div class="assistant-message ai-typing-indicator"
+                     role="status"
+                     aria-live="polite"
+                     aria-label="<?= $escaper->escapeHtmlAttr(__('Assistant is typing')) ?>">
+                    <div class="message-bubble loading-bubble">
+                        <div class="typing-dots" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+
+            <footer class="ai-chat-footer">
+                <div class="ai-input-wrapper">
+                    <label for="ai-chat-input" class="visually-hidden">
+                        <?= $escaper->escapeHtml(__('Ask a question...')) ?>
+                    </label>
+                    <input type="text"
+                           id="ai-chat-input"
+                           placeholder="<?= $escaper->escapeHtmlAttr(__('Ask a question...')) ?>"
+                           data-bind="value: currentInput,
+                                  valueUpdate: 'afterkeydown',
+                                  event: { keypress: handleKeyPress },
+                                  disable: isLoading,
+                                  attr: { 'aria-disabled': isLoading }"
+                           autocomplete="off"/>
+                    <button type="button"
+                            class="ai-btn-submit"
+                            data-bind="click: sendMessage,
+                                   disable: isLoading,
+                                   attr: { 'aria-disabled': isLoading }"
+                            aria-label="<?= $escaper->escapeHtmlAttr(__('Send')) ?>">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                             aria-hidden="true" focusable="false">
+                            <!-- send -->
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+                <small class="ai-disclaimer">
+                    <?= $escaper->escapeHtml(__('Verify answers.')) ?>
+                    <a href="#ai-assistant-transparency" role="button">
+                        <?= $escaper->escapeHtml(__('Transparency statement')) ?>
+                    </a>
+                </small>
+            </footer>
+
+        </div>
+
+    </section>
+
+    <script type="text/x-magento-init">
+        {
+            "#ai-assistant-root": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "aiAssistant": {
+                            "component": "Bgomesweb_AiAssistant/js/assistant-widget"
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

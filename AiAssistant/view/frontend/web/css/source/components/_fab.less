@@ -1,0 +1,58 @@
+& when (@media-common =true) {
+    #ai-assistant-root .ai-fab {
+        position: fixed;
+        right: 32px;
+        bottom: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        border-radius: var(--ai-radius-full);
+        border: none;
+        background: var(--ai-c-primary);
+        color: var(--ai-c-white);
+        cursor: pointer;
+        box-shadow: var(--ai-shadow-primary);
+        z-index: 999;
+        transition: box-shadow var(--ai-transition), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+
+        &:hover {
+            box-shadow: var(--ai-shadow-primary-hv);
+            transform: scale(1.06);
+        }
+
+        &:active {
+            transform: scale(0.96);
+        }
+
+        &.is-hidden {
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+        }
+
+        svg {
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    #ai-assistant-root .ai-fab-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: var(--ai-radius-full);
+        background: var(--ai-c-primary);
+        animation: ai-ring 1.8s ease-out infinite;
+        pointer-events: none;
+    }
+
+    body {
+        transition: padding-right var(--ai-transition-panel);
+    }
+
+    body.ai-chat-fullscreen {
+        overflow: hidden;
+    }
+}

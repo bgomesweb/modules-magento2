@@ -1,0 +1,96 @@
+& when (@media-common =true) {
+    #ai-assistant-root .ai-chat-footer {
+        flex-shrink: 0;
+        padding: var(--ai-sp-lg) var(--ai-sp-xl) var(--ai-sp-xl);
+        display: flex;
+        flex-direction: column;
+        gap: var(--ai-sp-md);
+        align-items: center;
+        border-top: 1px solid var(--ai-c-border);
+    }
+
+    #ai-assistant-root .ai-input-wrapper {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: var(--ai-sp-md);
+        width: 100%;
+        max-width: var(--ai-content-max);
+        background: var(--ai-c-card);
+        border: 1px solid var(--ai-c-border);
+        border-radius: var(--ai-radius);
+        padding: var(--ai-sp-md) var(--ai-sp-md) var(--ai-sp-md) 18px;
+        box-shadow: var(--ai-shadow-card);
+        transition: border-color var(--ai-transition), box-shadow var(--ai-transition);
+
+        &:focus-within {
+            border-color: var(--ai-c-header-bg);
+            box-shadow: 0 0 0 4px rgb(0 108 225 / 15%);
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: var(--ai-fs-base);
+            color: var(--ai-c-text);
+            font-family: var(--ai-font);
+            min-width: 0;
+            padding: var(--ai-sp-xs) 0;
+
+            &::placeholder {
+                color: var(--ai-c-muted);
+            }
+
+            &:disabled {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    #ai-assistant-root .ai-btn-submit {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--ai-c-primary);
+        color: var(--ai-c-white);
+        border: none;
+        border-radius: var(--ai-sp-md);
+        cursor: pointer;
+        box-shadow: var(--ai-shadow-primary);
+        transition: box-shadow var(--ai-transition), opacity var(--ai-transition), transform var(--ai-transition);
+
+        &:hover:not(:disabled) {
+            box-shadow: var(--ai-shadow-primary-hv);
+            transform: scale(1.04);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+    }
+
+    #ai-assistant-root .ai-disclaimer {
+        display: block;
+        font-size: var(--ai-fs-xs);
+        text-align: center;
+        color: rgb(110 110 115 / 60%);
+        line-height: 1.5;
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+            transition: color var(--ai-transition);
+
+            &:hover {
+                color: var(--ai-c-primary);
+            }
+        }
+    }
+}

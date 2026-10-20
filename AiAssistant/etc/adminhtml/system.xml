@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © Magento, Inc. All rights reserved.
+  ~
+  ~ @author      Bruno Gomes <bgomesweb@gmail.com>
+  ~ @copyright   2025 Bruno Gomes (<https://www.bgomesweb.com.br/>)
+  ~ @license     https://www.bgomesweb.com.br Copyright
+  ~ @link        https://www.bgomesweb.com.br/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bgomesweb" translate="label" sortOrder="400">
+            <label>Bgomesweb</label>
+        </tab>
+
+        <section id="bgomesweb_aiassistant" translate="label" sortOrder="200" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>AI Assistant</label>
+            <tab>bgomesweb</tab>
+            <resource>Bgomesweb_AiAssistant::config</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable AI Assistant</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable or disable the AI Assistant per Store View.</comment>
+                </field>
+                <field id="theme" translate="label comment" type="select" sortOrder="15" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Theme Selection</label>
+                    <source_model>Bgomesweb\AiAssistant\Model\Config\Source\Theme</source_model>
+                    <comment>Select the visual theme for the AI Assistant widget.</comment>
+                </field>
+                <field id="generation_prompt" translate="label comment" type="textarea" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Generation Prompt</label>
+                    <comment>System prompt sent to the AI provider when generating responses. This value can be
+                        configured per Store View.
+                    </comment>
+                </field>
+                <field id="display_pages" translate="label comment" type="multiselect" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Display Pages</label>
+                    <source_model>Bgomesweb\AiAssistant\Model\Config\Source\DisplayPages</source_model>
+                    <comment>Select the pages where the AI Assistant widget should be displayed. Select "All Pages" to
+                        show everywhere.
+                    </comment>
+                </field>
+            </group>
+            <group id="topics" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Topics</label>
+                <field id="list" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Topics Configuration</label>
+                    <frontend_model>Bgomesweb\AiAssistant\Block\Adminhtml\Form\Field\Topics</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

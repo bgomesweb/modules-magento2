@@ -1,0 +1,29 @@
+& when (@media-common =true) {
+    #ai-assistant-root .ai-chat-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        width: var(--ai-panel-width);
+        height: 100vh;
+        overflow: hidden;
+        background: var(--ai-c-panel-bg);
+        box-shadow: var(--ai-shadow-panel);
+        transform: translateX(100%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform var(--ai-transition-panel), opacity 0.25s ease, width var(--ai-transition-panel);
+
+        &.is-open {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        &.is-fullscreen {
+            width: 100vw;
+            z-index: 10101;
+        }
+    }
+}

@@ -1,0 +1,204 @@
+& when (@media-common =true) {
+    #ai-assistant-root .ai-products-row {
+        display: flex;
+        gap: var(--ai-sp-md);
+        width: 100%;
+        overflow-x: hidden;
+        padding: 8px;
+        box-sizing: border-box;
+
+        &::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--ai-c-primary-tint);
+            border-radius: 2px;
+        }
+    }
+
+    #ai-assistant-root .ai-product-card {
+        flex: 0 1 calc(33.333% - var(--ai-sp-sm));
+        min-width: 0;
+        background: var(--ai-c-card);
+        border: 1px solid var(--ai-c-border);
+        border-radius: var(--ai-radius);
+        overflow: hidden;
+        box-shadow: var(--ai-shadow-card);
+        display: flex;
+        flex-direction: column;
+        transition: box-shadow var(--ai-transition), transform var(--ai-transition);
+
+        .ai-products-row > &:only-child {
+            flex: 0 0 calc(100% - var(--ai-sp-sm));
+            max-width: 360px;
+            min-width: 320px;
+        }
+
+        &:hover {
+            box-shadow: var(--ai-shadow-card-hv);
+            transform: translateY(-2px);
+        }
+
+        .product-image-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: var(--ai-card-img-h);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .ai-card-body {
+            padding: var(--ai-sp-md) 14px 14px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .ai-card-name {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-size: var(--ai-fs-md);
+            font-weight: 600;
+            color: var(--ai-c-text);
+            line-height: 1.35;
+            min-height: calc(1.35em * 3);
+            margin: 0 0 var(--ai-sp-sm);
+            word-break: break-word;
+            text-decoration: none;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--ai-c-primary);
+            }
+        }
+
+        .ai-card-price {
+            font-size: var(--ai-fs-lg);
+            font-weight: 700;
+            color: var(--ai-c-primary);
+            margin-bottom: var(--ai-sp-md);
+        }
+
+        .ai-btn-buy {
+            width: 100%;
+            margin-top: auto;
+        }
+    }
+
+    #ai-assistant-root .ai-compare-card {
+        width: 100%;
+        margin-top: var(--ai-sp-md);
+        border: 1px solid var(--ai-c-border);
+        border-radius: var(--ai-radius);
+        overflow: hidden;
+        box-shadow: var(--ai-shadow-card);
+        background: var(--ai-c-card);
+        transition: box-shadow var(--ai-transition), transform var(--ai-transition);
+    }
+
+    #ai-assistant-root .ai-compare-inner {
+        display: flex;
+        flex-direction: column;
+        transition-property: transform;
+        transition-timing-function: ease;
+        padding: 12px 0;
+    }
+
+    #ai-assistant-root .ai-compare-table-row {
+        display: flex;
+        border-bottom: 1px solid var(--ai-c-border);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:nth-child(even) .ai-compare-table-cell {
+            background: var(--ai-c-stripe);
+        }
+    }
+
+    #ai-assistant-root .ai-compare-table-cell {
+        flex: 0 0 calc((100% - 12px * 0.3) / 1.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: var(--ai-sp-sm) var(--ai-sp-md);
+        font-size: var(--ai-fs-sm);
+        color: var(--ai-c-text);
+        line-height: 1.45;
+        border-right: 1px solid var(--ai-c-border);
+        min-width: 0;
+        word-break: break-word;
+        box-sizing: border-box;
+
+        &:last-child {
+            border-right: none;
+            margin-right: 0;
+        }
+    }
+
+    #ai-assistant-root .ai-compare-cell-label {
+        display: inline-block;
+        color: var(--ai-c-primary);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        line-height: 1.6;
+        margin-bottom: 4px;
+        min-height: 20px;
+    }
+
+    #ai-assistant-root .ai-compare-cell-value {
+        font-size: var(--ai-fs-sm);
+        color: var(--ai-c-text);
+        padding: 8px;
+    }
+
+    #ai-assistant-root .ai-btn-buy {
+        width: 100%;
+        background: var(--ai-c-primary);
+        color: var(--ai-c-white);
+        font-size: var(--ai-fs-md);
+        font-weight: 600;
+        padding: var(--ai-sp-md) 0;
+        border: none;
+        border-radius: var(--ai-radius-md);
+        cursor: pointer;
+        font-family: var(--ai-font);
+        transition: opacity var(--ai-transition), box-shadow var(--ai-transition);
+
+        &:hover:not(:disabled) {
+            opacity: 0.9;
+            box-shadow: var(--ai-shadow-primary);
+        }
+
+        &:disabled,
+        &.is-loading {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+
+    #ai-assistant-root .ai-product-groups {
+        width: 100%;
+    }
+
+    #ai-assistant-root .ai-product-group-title {
+        font-size: var(--ai-fs-sm);
+        font-weight: 600;
+        color: var(--ai-c-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0 0 var(--ai-sp-md);
+    }
+}

@@ -1,0 +1,94 @@
+& when (@media-common =true) {
+    :root {
+        --ai-panel-width: 420px;
+    }
+
+    #ai-assistant-root {
+        --ai-c-primary: #007AFF;
+        --ai-c-primary-dark: #0062CC;
+        --ai-c-primary-tint: rgb(0 122 255 / 8%);
+        --ai-c-accent: #FF6B35;
+        --ai-c-card: #fff;
+        --ai-c-border: rgb(255 255 255 / 45%);
+        --ai-c-muted: #6E6E73;
+        --ai-c-text: #1D1D1F;
+        --ai-c-panel-bg: #fff;
+        --ai-c-header-bg: #006CE1;
+        --ai-c-footer-bg: #fff;
+        --ai-c-user-bubble: #007AFF;
+        --ai-c-stripe: rgb(0 122 255 / 3%);
+        --ai-c-white: #fff;
+        --ai-c-success: #34C759;
+        --ai-c-success-tint: rgb(52 199 89 / 10%);
+        --ai-c-error: #FF3B30;
+        --ai-c-error-tint: rgb(255 59 48 / 10%);
+        --ai-shadow-primary: 0 6px 24px rgb(0 122 255 / 25%);
+        --ai-shadow-primary-hv: 0 10px 40px rgb(0 122 255 / 38%);
+        --ai-shadow-card: 0 4px 16px rgb(0 0 0 / 8%), inset 0 1px 0 rgb(255 255 255 / 80%);
+        --ai-shadow-card-hv: 0 12px 40px rgb(0 122 255 / 18%);
+        --ai-shadow-panel: -6px 0 80px rgb(0 0 0 / 14%);
+        --ai-radius: 20px;
+        --ai-radius-sm: 6px;
+        --ai-radius-md: 10px;
+        --ai-radius-full: 9999px;
+        --ai-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --ai-fs-xs: 10px;
+        --ai-fs-sm: 12px;
+        --ai-fs-base: 14px;
+        --ai-fs-md: 13px;
+        --ai-fs-lg: 15px;
+        --ai-fs-xl: 22px;
+        --ai-panel-width: 420px;
+        --ai-header-h: 64px;
+        --ai-card-img-h: 160px;
+        --ai-content-max: 860px;
+        --ai-sp-xs: 4px;
+        --ai-sp-sm: 8px;
+        --ai-sp-md: 12px;
+        --ai-sp-lg: 16px;
+        --ai-sp-xl: 20px;
+        --ai-sp-2xl: 24px;
+        --ai-sp-3xl: 28px;
+        --ai-transition: 0.2s ease;
+        --ai-transition-panel: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &.ai-theme-neutral, &[data-theme="neutral"] {
+            --ai-radius: 20px;
+            --ai-radius-sm: 6px;
+            --ai-radius-md: 10px;
+            --ai-c-primary: #2563EB;
+            --ai-c-primary-dark: #1D4ED8;
+            --ai-c-primary-tint: rgb(37 99 235 / 8%);
+            --ai-c-accent: #F97316;
+            --ai-c-card: #F8FAFC;
+            --ai-c-border: #E2E8F0;
+            --ai-c-muted: #64748B;
+            --ai-c-text: #0F172A;
+            --ai-c-panel-bg: #fff;
+            --ai-c-header-bg: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            --ai-c-footer-bg: #fff;
+            --ai-c-user-bubble: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            --ai-c-stripe: rgb(37 99 235 / 3%);
+            --ai-c-white: #fff;
+            --ai-c-success: #10B981;
+            --ai-c-success-tint: rgb(16 185 129 / 10%);
+            --ai-c-error: #EF4444;
+            --ai-c-error-tint: rgb(239 68 68 / 10%);
+            --ai-shadow-primary: 0 4px 16px rgb(37 99 235 / 22%);
+            --ai-shadow-primary-hv: 0 6px 24px rgb(37 99 235 / 35%);
+            --ai-shadow-card: 0 2px 8px rgb(15 23 42 / 4%);
+            --ai-shadow-card-hv: 0 8px 20px rgb(37 99 235 / 12%);
+            --ai-shadow-panel: -8px 0 36px rgb(15 23 42 / 8%);
+
+            .assistant-message .message-bubble .ai-message-text,
+            .ai-welcome-card,
+            .ai-btn-suggestion,
+            .ai-product-card,
+            .ai-compare-card,
+            .ai-typing-indicator .loading-bubble {
+                backdrop-filter: blur(16px) saturate(180%);
+                border: 1px solid rgb(15 23 42 / 8%);
+            }
+        }
+    }
+}
