@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="bgomesweb_gemini_provider" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Gemini AI Provider</label>
+            <tab>bgomesweb</tab>
+            <resource>Bgomesweb_GeminiProvider::config</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Gemini Provider</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Master switch for all Bgomesweb modules that use Google Generative AI.</comment>
+                </field>
+                <field id="api_key" translate="label" type="obscure" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Generative AI API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <comment>
+                        <![CDATA[API Key for Google Generative AI (Gemini). Stored encrypted. Get your key at <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>.]]>
+                    </comment>
+                </field>
+                <field id="models" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Models (Fallback Order)</label>
+                    <frontend_model>Bgomesweb\GeminiProvider\Block\Adminhtml\Form\Field\Models</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment><![CDATA[First row is the primary model used for all AI generation requests. Remaining rows are the fallback chain, tried in order top to bottom. See available models and current pricing at <a href="https://ai.google.dev/gemini-api/docs/pricing?hl=pt-br" target="_blank">Gemini API Pricing</a>.]]></comment>
+                </field>
+                <field id="fallback_enabled" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Model Fallback</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[When enabled, if the primary model fails with a recoverable error (HTTP 404, 429, 500, 503), the remaining models above are tried automatically in the order configured.<br/><strong>Cost warning:</strong> if the chain includes Gemini 2.5 Pro, its output rate is 25x that of Flash-Lite.]]></comment>
+                </field>
+                <field id="timeout" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Request Timeout (Seconds)</label>
+                    <validate>validate-digits</validate>
+                    <comment>Default HTTP timeout in seconds for AI API calls (default: 60). Can be overridden per request via metadata.</comment>
+                </field>
+                <field id="max_output_tokens" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max Output Tokens</label>
+                    <validate>validate-digits</validate>
+                    <comment><![CDATA[Maximum tokens the model may spend on a single response (default: 8192). Can be overridden per request via metadata.<br/>Gemini 2.5 models reason by default and thinking tokens consume this same budget, so a low value can make a request return <strong>no content at all</strong> (finish reason MAX_TOKENS). Raise it for long documents; lower it only to cap cost.]]></comment>
+                </field>
+            </group>
+            <group id="pricing" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Pricing Settings (Cost Calculation)</label>
+                <field id="exchange_rate_brl" translate="label" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>USD to BRL Exchange Rate</label>
+                    <comment>Exchange rate used to display estimated costs in Reais (R$) in the Admin panel (default: 5.30). Auto-updated every 6 hours; manual edits are overwritten on the next run.</comment>
+                </field>
+                <field id="exchange_rate_cron_schedule" translate="label" type="text" sortOrder="15" showInDefault="1">
+                    <label>Exchange Rate Update Schedule (Cron Expression)</label>
+                    <comment>Cron expression controlling how often the USD/BRL rate above is refreshed (default: 0 */6 * * *, every 6 hours). Takes effect after cache flush, does not require setup:upgrade.</comment>
+                </field>
+                <field id="models" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pricing per Model</label>
+                    <frontend_model>Bgomesweb\GeminiProvider\Block\Adminhtml\Form\Field\Pricing</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment><![CDATA[Set the input and output token cost (per 1 Million tokens) in USD for each AI model. Refer to official prices at <a href="https://ai.google.dev/pricing" target="_blank">Google AI Studio Pricing</a> (check Standard, Batch, Flex or Priority tab depending on your tier).]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

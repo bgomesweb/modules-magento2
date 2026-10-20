@@ -1,0 +1,22 @@
+{
+    "name": "bgomesweb/module-gemini-provider",
+    "version": "1.0.0",
+    "description": "Magento 2 module providing Google Generative AI (Gemini) client for use by other Bgomesweb modules",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*",
+        "magento/module-config": "*",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "license": [
+        "Proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Bgomesweb\\GeminiProvider\\": ""
+        }
+    }
+}

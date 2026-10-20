@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="bgomesweb_gemini_provider_update_exchange_rate" instance="Bgomesweb\GeminiProvider\Cron\UpdateExchangeRate" method="execute">
+            <config_path>bgomesweb_gemini_provider/pricing/exchange_rate_cron_schedule</config_path>
+        </job>
+    </group>
+</config>

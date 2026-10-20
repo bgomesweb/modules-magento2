@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Bgomesweb\GeminiProvider\Api\GeminiClientInterface" type="Bgomesweb\GeminiProvider\Model\GeminiClient" />
+    <preference for="Bgomesweb\GeminiProvider\Api\ConfigInterface" type="Bgomesweb\GeminiProvider\Model\Config" />
+    <preference for="Bgomesweb\GeminiProvider\Api\CostCalculatorInterface" type="Bgomesweb\GeminiProvider\Model\CostCalculator" />
+    <preference for="Bgomesweb\GeminiProvider\Api\Data\GenerationResultInterface" type="Bgomesweb\GeminiProvider\Model\Data\GenerationResult" />
+</config>
