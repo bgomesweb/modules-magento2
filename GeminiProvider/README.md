@@ -49,6 +49,10 @@ bin/magento cache:flush
 | Exchange Rate Update Schedule | `0 */6 * * *` | Cron expression for the rate update job. |
 | Pricing per Model | — | Input/output cost per model. |
 
+### Screenshot
+
+![Configuração do Gemini Provider no admin](docs/images/geminai.png)
+
 ## Usage
 
 Inject `Bgomesweb\GeminiProvider\Api\GeminiClientInterface` in your class and call `generateContent()`. It returns a `GenerationResultInterface` with the generated content and usage data.
